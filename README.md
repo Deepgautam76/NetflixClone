@@ -3,6 +3,9 @@
 # Build the Netflix Clone
  - Create app vite@latest
  - Configured TailwindCSS
+ - Header
+ - Login Form (SignIn form)
+ - Signup form 
 
  # Features
  - Login/Sign Up
