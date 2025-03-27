@@ -1,14 +1,8 @@
 import React from "react";
-import "./App.css";
+import Body from "./components/Body";
 
 function App() {
-  return (
-    <>
-      <div >
-        <h1 className=" m-4 text-3xl font-semibold underline ">Hello form the Netflix clone</h1>
-      </div>
-    </>
-  );
+  return <Body />;
 }
 
 export default App;
