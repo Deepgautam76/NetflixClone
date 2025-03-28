@@ -1,9 +1,27 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { checkEmail, checkPassword } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
+  const [errorMessageOfEmail, setErrorMessageOfEmail] = useState(null);
+  const [errorMessageOfPassword, setErrorMessageOfPassword] = useState(null);
+
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleSubmitClick = () => {
+    //Validate the form data
+    const EmailMessage = checkEmail(email.current.value);
+    const passwordMessage = checkPassword(password.current.value);
+    setErrorMessageOfEmail(EmailMessage);
+    setErrorMessageOfPassword(passwordMessage);
+    
+    //Submit the form Signin / signup
+  };
+
   const togglecSigninForm = () => {
     setSignInForm(!isSignInForm);
   };
@@ -20,31 +38,34 @@ const Login = () => {
         {/* Login form content */}
         <div className="flex justify-center items-center w-sm m-auto bg-black/60 rounded-lg  mb-8">
           <div className="p-8 rounded-lg w-96 text-white">
-            <form
-              action="https://localhost:8080/login"
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form onSubmit={(e) => e.preventDefault()}>
               <h2 className="text-3xl font-bold mb-6">
                 {isSignInForm ? "Sign In" : "Sign Up"}
               </h2>
               {!isSignInForm && (
                 <input
+                  ref={name}
                   type="text"
                   placeholder="Enter full name"
                   className="w-full p-3 mb-4 bg-gray-800 rounded focus:outline-none"
                 />
               )}
               <input
+                ref={email}
                 type="text"
                 placeholder="Email or mobile number"
                 className="w-full p-3 mb-4 bg-gray-800 rounded focus:outline-none"
               />
+              <p className="text-red-700 font-bold">{errorMessageOfEmail}</p>
               <input
+                ref={password}
                 type="password"
                 placeholder="Password"
                 className="w-full p-3 mb-6 bg-gray-800 rounded focus:outline-none"
               />
+              <p className="text-red-700 font-bold">{errorMessageOfPassword}</p>
               <button
+                onClick={handleSubmitClick}
                 type="submit"
                 className="w-full p-3 bg-red-600 rounded font-bold"
               >
