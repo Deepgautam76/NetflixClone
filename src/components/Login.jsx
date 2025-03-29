@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { checkEmail, checkPassword } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/Firebase";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
@@ -18,8 +23,43 @@ const Login = () => {
     const passwordMessage = checkPassword(password.current.value);
     setErrorMessageOfEmail(EmailMessage);
     setErrorMessageOfPassword(passwordMessage);
-    
-    //Submit the form Signin / signup
+
+    /**
+     * Submit form on firebase for SignIn/SignUp
+     */
+    if (!isSignInForm) {
+      //Signed up logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessageOfEmail(errorMessage + errorCode);
+        });
+    } else {
+      //Signed In logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessageOfEmail(errorMessage + errorCode);
+        });
+    }
   };
 
   const togglecSigninForm = () => {
@@ -35,8 +75,7 @@ const Login = () => {
         }}
       >
         <Header />
-        {/* Login form content */}
-        <div className="flex justify-center items-center w-sm m-auto bg-black/60 rounded-lg  mb-8">
+        <div className="container flex justify-center items-center max-w-sm m-auto bg-black/60 rounded-lg  mb-8">
           <div className="p-8 rounded-lg w-96 text-white">
             <form onSubmit={(e) => e.preventDefault()}>
               <h2 className="text-3xl font-bold mb-6">
@@ -83,7 +122,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-        {/* Here is end of the login form content */}
         <Footer />
       </div>
     </>
