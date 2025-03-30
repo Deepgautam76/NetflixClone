@@ -5,28 +5,32 @@ import { checkEmail, checkPassword } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/Firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const [isSignInForm, setSignInForm] = useState(true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isSignInForm, setSignInForm] = useState(false);
   const [errorMessageOfEmail, setErrorMessageOfEmail] = useState(null);
   const [errorMessageOfPassword, setErrorMessageOfPassword] = useState(null);
+  const [firebaseErrorMessage, setFirebaseErrorMessage] = useState(null);
 
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
   const handleSubmitClick = () => {
-    //Validate the form data
+    //Validate the form data before submitting
     const EmailMessage = checkEmail(email.current.value);
     const passwordMessage = checkPassword(password.current.value);
     setErrorMessageOfEmail(EmailMessage);
     setErrorMessageOfPassword(passwordMessage);
-
-    /**
-     * Submit form on firebase for SignIn/SignUp
-     */
+    /** Submit form on firebase for SignIn/SignUp */
     if (!isSignInForm) {
       //Signed up logic
       createUserWithEmailAndPassword(
@@ -36,12 +40,36 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
+          //Here we add display name to the user
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "/public/ProfileAvtar.jpg",
+          })
+            .then(() => {
+              // Profile updated successfully
+              //Update the redux store with user data
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+              setFirebaseErrorMessage(null);
+            })
+            .catch((error) => {
+              setFirebaseErrorMessage(error.message);
+            });
+          navigate("/browse");
+          setFirebaseErrorMessage(null);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessageOfEmail(errorMessage + errorCode);
+          setFirebaseErrorMessage(errorMessage + "+" + errorCode);
         });
     } else {
       //Signed In logic
@@ -52,16 +80,18 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
+          navigate("/browse");
+          setFirebaseErrorMessage(null);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessageOfEmail(errorMessage + errorCode);
+          setFirebaseErrorMessage(errorMessage + "+" + errorCode);
         });
     }
   };
 
+  //Function for taggle the same form into Signin/Signup
   const togglecSigninForm = () => {
     setSignInForm(!isSignInForm);
   };
@@ -95,18 +125,25 @@ const Login = () => {
                 placeholder="Email or mobile number"
                 className="w-full p-3 mb-4 bg-gray-800 rounded focus:outline-none"
               />
-              <p className="text-red-700 font-bold">{errorMessageOfEmail}</p>
+              <p className="text-red-700 font-semibold">
+                {errorMessageOfEmail}
+              </p>
               <input
                 ref={password}
                 type="password"
                 placeholder="Password"
                 className="w-full p-3 mb-6 bg-gray-800 rounded focus:outline-none"
               />
-              <p className="text-red-700 font-bold">{errorMessageOfPassword}</p>
+              <p className="text-red-700 font-semibold">
+                {errorMessageOfPassword}
+              </p>
+              <p className="text-red-700 font-semibold pb-2">
+                {firebaseErrorMessage}
+              </p>
               <button
                 onClick={handleSubmitClick}
                 type="submit"
-                className="w-full p-3 bg-red-600 rounded font-bold"
+                className="w-full p-3 bg-red-600 rounded font-bold cursor-pointer hover:scale-95"
               >
                 {isSignInForm ? "Sign In" : "Sign Up"}
               </button>
