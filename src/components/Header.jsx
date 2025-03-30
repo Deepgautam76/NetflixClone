@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center p-5">
+    <div className="container flex justify-between items-center p-5">
       <div>
         <NavLink to="/">
           <img
@@ -12,6 +12,18 @@ const Header = () => {
             alt="Netflix Logo"
           />
         </NavLink>
+      </div>
+      <div className="flex text-white items-center ">
+        <div className="p-2 font-bold">
+          <span>User Name</span>
+        </div>
+        <div className="flex justify-center items-center">
+          <img
+            className="h-10 w-10 rounded-full object-cover"
+            src="../../Assets/Imeges/profilAvtar.jpg"
+            alt="Profile Avtar"
+          />
+        </div>
       </div>
     </div>
   );
