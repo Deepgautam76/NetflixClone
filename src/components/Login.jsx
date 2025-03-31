@@ -8,13 +8,11 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/Firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isSignInForm, setSignInForm] = useState(false);
   const [errorMessageOfEmail, setErrorMessageOfEmail] = useState(null);
   const [errorMessageOfPassword, setErrorMessageOfPassword] = useState(null);
@@ -30,9 +28,9 @@ const Login = () => {
     const passwordMessage = checkPassword(password.current.value);
     setErrorMessageOfEmail(EmailMessage);
     setErrorMessageOfPassword(passwordMessage);
-    /** Submit form on firebase for SignIn/SignUp */
+
+    //Signed up logic(create user)
     if (!isSignInForm) {
-      //Signed up logic
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -46,8 +44,7 @@ const Login = () => {
             photoURL: "/public/ProfileAvtar.jpg",
           })
             .then(() => {
-              // Profile updated successfully
-              //Update the redux store with user data
+              //Update the redux store with user data when we create the user
               const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
@@ -57,13 +54,11 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
               setFirebaseErrorMessage(null);
             })
             .catch((error) => {
               setFirebaseErrorMessage(error.message);
             });
-          navigate("/browse");
           setFirebaseErrorMessage(null);
         })
         .catch((error) => {
@@ -72,7 +67,7 @@ const Login = () => {
           setFirebaseErrorMessage(errorMessage + "+" + errorCode);
         });
     } else {
-      //Signed In logic
+      //Signed In logic(login the user)
       signInWithEmailAndPassword(
         auth,
         email.current.value,
@@ -80,7 +75,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate("/browse");
           setFirebaseErrorMessage(null);
         })
         .catch((error) => {
@@ -91,7 +85,7 @@ const Login = () => {
     }
   };
 
-  //Function for taggle the same form into Signin/Signup
+  //Toggle the same form into SignIn/SignUp(reuser the code)
   const togglecSigninForm = () => {
     setSignInForm(!isSignInForm);
   };

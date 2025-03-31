@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/Firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const subscribe = useSelector((store) => store.user);
   const navigate = useNavigate();
   const handleSignOutClick = () => {
@@ -16,6 +18,31 @@ const Header = () => {
         navigate("/error");
       });
   };
+  
+  /**
+   * Here we handel the login/logout user(Auth)
+   * And add the user into redux store
+   */
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser(null));
+        navigate("/");
+      }
+    });
+  }, []);
+
   return (
     <div className="container flex justify-between items-center">
       <div>
