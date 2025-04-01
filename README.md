@@ -1,4 +1,6 @@
-# Tech uses(React,GPT)
+-Timestamp-33
+
+# Tech uses(React,Redux,GPT)
 
 # Build the Netflix Clone
  - Create app vite@latest
@@ -16,6 +18,10 @@
  - Created Redux store with userSlice
  - Implimented signout
  - Update profile imediately creation
+ - BugFix: Sign up user dispalayname and profile picture update
+ - BugFix: if user is no logded in then redirect to browse to Login page and vice-versa
+ - Unsubsribe to the onAuthStateChanged calleback
+ - Add hardcoded value to constants
  - Fetch movies from TMDB movies
 
 
