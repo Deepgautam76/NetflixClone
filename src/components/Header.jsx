@@ -53,13 +53,15 @@ const Header = () => {
         <div className="p-2 font-bold">
           <span>
             {subscribe?.displayName
-              ? `${
-                  subscribe?.displayName
-                    ?.substring(0, 6)
-                    ?.charAt(0)
-                    ?.toUpperCase() +
-                  subscribe?.displayName?.substring(0, 6)?.slice(1)
-                }...`
+              ? subscribe?.dispplayName?.length > 6
+                ? `${
+                    subscribe?.displayName?.charAt(0)?.toUpperCase() +
+                    subscribe?.displayName?.slice(1, 5)
+                  }...`
+                : `${
+                    subscribe?.displayName?.charAt(0)?.toUpperCase() +
+                    subscribe?.displayName?.slice(1)
+                  }`
               : "Guest"}
           </span>
         </div>
