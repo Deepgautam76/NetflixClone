@@ -40,9 +40,7 @@ const Header = () => {
         navigate("/");
       }
     });
-
-    // This also called the celanup function
-    // Unsubsribe when compponent unmounts
+    // Unsubsribe when compponent unmounts(usesd cleanup function)
     return () => unsubscribe();
   }, []);
 
@@ -55,7 +53,13 @@ const Header = () => {
         <div className="p-2 font-bold">
           <span>
             {subscribe?.displayName
-              ? `${subscribe?.displayName?.substring(0, 6)}...`
+              ? `${
+                  subscribe?.displayName
+                    ?.substring(0, 6)
+                    ?.charAt(0)
+                    ?.toUpperCase() +
+                  subscribe?.displayName?.substring(0, 6)?.slice(1)
+                }...`
               : "Guest"}
           </span>
         </div>
