@@ -23,6 +23,15 @@
  - Unsubsribe to the onAuthStateChanged calleback
  - Add hardcoded value to constants
  - Fetch movies from TMDB movies
+ - Update the store with movie data
+ - Planning for MainContainer & Secondary Container
+   - MainContainer
+     - Header component
+     - VideoTitle components
+     - VideoBackground component
+   - Secondar Container
+     - Title of movies
+     - Show all movies card
 
 
  # Features
