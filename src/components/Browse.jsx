@@ -1,13 +1,18 @@
 import React from "react";
 import Header from "./Header";
+import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
+  // Called custom hooks
+  useNowPlayingMovies();
+
   return (
     <div className="container">
       <Header />
-      <div className="container flex justify-center items-center font-bold text-2xl text-red-700">
-        browser
-      </div>
+      <MainContainer />
+      <SecondaryContainer />
     </div>
   );
 };
