@@ -16,7 +16,7 @@ const useMovieTrailer = (movieId) => {
   };
   useEffect(() => {
     const trailerCleanup = trailerVideoData();
-    return () => trailerCleanup();
+    return () => trailerCleanup;
   }, []);
 };
 
