@@ -6,10 +6,12 @@ const MovieList = ({ title, movies }) => {
     <div>
       <div>
         <h1 className="text-2xl font-bold mx-4 p-2">{title}</h1>
-        <div>
-          {/* {movies.map((movie) => (
-            <MovieCard key={movie} poster={movie?.poster_path} />
-          ))} */}
+        <div className="flex">
+          {movies !== null
+            ? movies.map((movie) => (
+                <MovieCard key={movie?.id} poster={movie?.poster_path} />
+              ))
+            : "Loading..."}
         </div>
       </div>
     </div>
