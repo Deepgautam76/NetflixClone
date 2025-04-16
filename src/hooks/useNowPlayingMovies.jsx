@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const useNowPlayingMovies = () => {
   const [moviesData, setMoviesData] = useState([]);
   const dispatch = useDispatch();
-  const YOUR_API_KEY = "67257140740e4a824b5ed5c676187952";
+  const YOUR_API_KEY = import.meta.env.VITE_YOUR_API_KEY;
   const movieData = async () => {
     try {
       const response = await fetch(
