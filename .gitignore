@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+
 # firebase
 .firebase
 src/utils/Firebase.jsx
+
+# dotenv environment variable files
+.env
