@@ -18,7 +18,7 @@ const useUpcomingMovies = () => {
       dispatch(addUpcomingMovies(data?.results));
       setMoviesData(data?.results);
     } catch (error) {
-      console.error("Error fetching movie data of trending movies:", error);
+      console.error("Error fetching movie data of upcoming movies:", error);
     }
   };
 

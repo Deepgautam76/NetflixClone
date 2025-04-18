@@ -18,7 +18,7 @@ const usePopularMovies= () => {
       dispatch(addPopularMovies(data?.results));
       setMoviesData(data?.results);
     } catch (error) {
-      console.error("Error fetching movie data of trending movies:", error);
+      console.error("Error fetching movie data of popular movies:", error);
     }
   };
 
