@@ -1,6 +1,4 @@
--Timestamp-33
-
-# Tech uses(React,Redux,GPT)
+# Tech uses(React,Redux,GPT,Firebase)
 
 # Build the Netflix Clone
  - Create app vite@latest
