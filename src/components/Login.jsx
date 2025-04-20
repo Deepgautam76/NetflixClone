@@ -100,7 +100,7 @@ const Login = () => {
       >
         <Header />
         <div className="container flex justify-center items-center max-w-sm m-auto bg-black/60 rounded-lg  mb-8">
-          <div className="p-8 rounded-lg w-96 text-white">
+          <div className="p-8 rounded-lg w-96 text-white ">
             <form onSubmit={(e) => e.preventDefault()}>
               <h2 className="text-3xl font-bold mb-6">
                 {isSignInForm ? "Sign In" : "Sign Up"}

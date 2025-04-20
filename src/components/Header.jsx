@@ -45,7 +45,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="container flex justify-between items-center bg-gradient-to-b from-black">
+    <div className="absolute z-50 container flex justify-between items-center bg-gradient-to-b from-black opacity-60">
       <div>
         <img className="h-20" src={LOGO} alt="Netflix Logo" />
       </div>
