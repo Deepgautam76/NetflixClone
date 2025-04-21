@@ -23,6 +23,8 @@
  - Fetch movies from TMDB movies
  - Update the store with movie data
  - Planning for MainContainer & Secondary Container
+ - Browse Component
+   - Header Component
    - MainContainer
      - Header component
      - VideoTitle components
