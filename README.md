@@ -32,6 +32,7 @@
    - Secondar Container
      - Title of movies
      - Show all movies card
+ - GPT Search feature   
 
 
  # Features
