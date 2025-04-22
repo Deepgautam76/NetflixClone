@@ -45,12 +45,11 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="absolute z-50 container flex justify-between items-center bg-gradient-to-b from-black opacity-60">
+    <div className="absolute z-1 container flex justify-between items-center bg-gradient-to-b from-black opacity-60">
       <div>
         <img className="h-20" src={LOGO} alt="Netflix Logo" />
       </div>
       <div className="flex text-white items-center ">
-
         <div className="p-2 font-bold">
           <span>
             {subscribe?.displayName
@@ -74,17 +73,28 @@ const Header = () => {
           />
         </div>
         {subscribe?.uid && (
-         <div>
-          <button className="p-2"> Search</button>
-           <div>
-            <button
-              onClick={handleSignOutClick}
-              className="bg-red-600 text-white font-bold py-2 px-4 rounded ml-2 m-2 cursor-pointer hover:scale-95"
-            >
-              Logout
-            </button>
+          <div className="flex">
+            <div>
+              <input
+                className="p-2 m-2 rounded-2xl bg-purple-600 text-white"
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search here"
+              />
+              <button className="p-2 px-4 m-2 bg-purple-600 text-white rounded">
+                Search
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={handleSignOutClick}
+                className="bg-red-600 text-white font-bold py-2 px-4 rounded ml-2 m-2 cursor-pointer hover:scale-95"
+              >
+                Logout
+              </button>
+            </div>
           </div>
-         </div>
         )}
       </div>
     </div>
