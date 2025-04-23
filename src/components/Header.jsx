@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/Firebase";
@@ -9,6 +9,7 @@ import { LOGO } from "../utils/Constant";
 const Header = () => {
   const dispatch = useDispatch();
   const subscribe = useSelector((store) => store.user);
+  const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const handleSignOutClick = () => {
     signOut(auth)
@@ -44,6 +45,13 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  /**
+   * Implemented the seach functionality
+   */
+  const handleSeach = () => {
+    console.log(searchText);
+  };
+
   return (
     <div className="absolute z-1 container flex justify-between items-center bg-gradient-to-b from-black opacity-60">
       <div>
@@ -76,13 +84,17 @@ const Header = () => {
           <div className="flex">
             <div>
               <input
-                className="p-2 m-2 rounded-2xl bg-purple-600 text-white"
+                className="p-2 px-4 m-2 rounded-2xl bg-purple-600 text-white hover:scale-101"
                 type="text"
                 name="search"
                 id="search"
                 placeholder="Search here"
+                onChange={(e) => setSearchText(e.target.value)}
               />
-              <button className="p-2 px-4 m-2 bg-purple-600 text-white rounded">
+              <button
+                className="p-2 px-4 m-2 bg-purple-600 text-white rounded-xl cursor-pointer hover:scale-95"
+                onClick={handleSeach}
+              >
                 Search
               </button>
             </div>
