@@ -49,7 +49,6 @@ const Header = () => {
    * Implemented the seach functionality
    */
   const handleSeach = () => {
-    console.log(searchText);
   };
 
   return (
